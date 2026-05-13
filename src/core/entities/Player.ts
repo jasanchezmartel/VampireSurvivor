@@ -19,14 +19,14 @@ export class Player {
     public readonly id: string;
 
     constructor(x: number, y: number, speed: number = 3) {
-        this.id = 'player_' + Math.random().toString(36).substr(2, 9);
+        this.id = 'player_' + Math.random().toString(36);
         this.pos = new Vector2D(x, y);
         this.speed = speed;
         
         // Broadcast spawn event
         eventBus.emit('spawn', { entity: this });
     }
-
+    //Aun no implementado (no puede morir ni atacar)
     public playAction(state: AnimState) {
         if (this.currentState === 'death') return;
 

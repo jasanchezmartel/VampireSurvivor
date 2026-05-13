@@ -17,9 +17,6 @@ const eventsProcessor = new EventsPollingProcessor();
 const game = new Game();
 const backgroundRenderer = new BackgroundRenderer('/background/background.png');
 
-// For debugging/lab purposes (simulating what the user had)
-(window as any).player = game.player;
-
 window.addEventListener('keydown', (e) => {
     if (e.key === 'w' || e.key === 'ArrowUp') game.inputs.up = true;
     if (e.key === 's' || e.key === 'ArrowDown') game.inputs.down = true;
@@ -63,4 +60,4 @@ function gameLoop(time: number) {
     requestAnimationFrame(gameLoop);
 }
 
-requestAnimationFrame(gameLoop);
+requestAnimationFrame(gameLoop);

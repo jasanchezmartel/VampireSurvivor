@@ -11,7 +11,7 @@ type EventPayload<T extends keyof GameEvents> = {
 
 export class EventsPollingProcessor {
     private queue: EventPayload<keyof GameEvents>[] = [];
-    
+
     // Maps entity id to its renderer
     private playerRenderers: Map<string, PlayerRenderer> = new Map();
     private enemyRenderers: Map<string, EnemyRenderer> = new Map();
@@ -19,7 +19,7 @@ export class EventsPollingProcessor {
     constructor() {
         // Listen to all events and queue them
         eventBus.on('*', (type, payload) => {
-            this.queue.push({ type: type as keyof GameEvents, payload: payload as any });
+            this.queue.push({ type: type as keyof GameEvents, payload: payload as GameEvents[keyof GameEvents] });
         });
     }
 
@@ -27,7 +27,7 @@ export class EventsPollingProcessor {
         // Process all events currently in the queue
         while (this.queue.length > 0) {
             const event = this.queue.shift()!;
-            
+
             if (event.type === 'spawn') {
                 const { entity } = event.payload as GameEvents['spawn'];
                 if (entity.type === 'player') {
@@ -37,7 +37,7 @@ export class EventsPollingProcessor {
                     const renderer = new EnemyRenderer(entity as Enemy);
                     this.enemyRenderers.set(entity.id, renderer);
                 }
-            } 
+            }
             else if (event.type === 'death') {
                 const { entity } = event.payload as GameEvents['death'];
                 if (entity.type === 'player') {

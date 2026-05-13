@@ -71,11 +71,6 @@ function createObject(type = currentBiome): WorldObject {
     return obj;
 }
 
-(window as any).setBiome = (name: string) => {
-    currentBiome = name;
-    objects = Array.from({ length: BIOMES[name].count }, () => createObject(name));
-};
-
 window.addEventListener('keydown', (e) => { if (e.key.toLowerCase() in keys) keys[e.key.toLowerCase()] = true; });
 window.addEventListener('keyup', (e) => { if (e.key.toLowerCase() in keys) keys[e.key.toLowerCase()] = false; });
 

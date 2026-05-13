@@ -8,11 +8,11 @@ export class Enemy {
     public speed: number;
 
     constructor(x: number, y: number, speed: number = 1) {
-        this.id = 'enemy_' + Math.random().toString(36).substr(2, 9);
+        this.id = 'enemy_' + Math.random().toString(36);
         this.pos = new Vector2D(x, y);
         this.speed = speed;
         
-        eventBus.emit('spawn', { entity: this as any });
+        eventBus.emit('spawn', { entity: this });
     }
 
     public update(targetPos: Vector2D) {

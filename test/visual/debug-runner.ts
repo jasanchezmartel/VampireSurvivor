@@ -1,4 +1,4 @@
-import { Player, type InputState } from '../../src/entities/Player';
+import { Player, type InputState } from '../../src/core/entities/Player';
 
 const canvas = document.getElementById('debug-canvas') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d')!;
@@ -61,7 +61,6 @@ function drawCaveBackground(ctx: CanvasRenderingContext2D) {
 function loop() {
     drawCaveBackground(ctx);
     player.update(keys);
-    player.draw(ctx);
     requestAnimationFrame(loop);
 }
 
