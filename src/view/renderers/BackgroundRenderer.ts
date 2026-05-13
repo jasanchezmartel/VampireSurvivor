@@ -1,6 +1,6 @@
-import { Vector2D } from '../math/Vector2D';
+import { Vector2D } from '../../math/Vector2D';
 
-export class Background {
+export class BackgroundRenderer {
     private image: HTMLImageElement;
     private isLoaded: boolean = false;
     private readonly tileSize: number = 32;
@@ -10,7 +10,7 @@ export class Background {
     constructor(path: string) {
         this.image = new Image();
         this.image.src = path;
-        this.image.onload = () => this.isLoaded = true;
+        this.image.onload = () => { this.isLoaded = true; };
     }
 
     private getTileAt(x: number, y: number) {
