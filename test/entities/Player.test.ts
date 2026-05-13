@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { Player } from '../../src/entities/Player';
+import { Player } from '../../src/core/entities/Player';
 
 describe('Player Logic', () => {
     let player: Player;

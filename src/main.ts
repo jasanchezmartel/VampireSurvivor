@@ -1,5 +1,4 @@
 import { Game } from './core/Game';
-import { EventsPollingProcessor } from './view/EventsPollingProcessor';
 import { BackgroundRenderer } from './view/renderers/BackgroundRenderer';
 
 const canvas = document.getElementById('game-canvas') as HTMLCanvasElement;
@@ -13,7 +12,6 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-const eventsProcessor = new EventsPollingProcessor();
 const game = new Game();
 const backgroundRenderer = new BackgroundRenderer('/background/background.png');
 
@@ -40,10 +38,7 @@ function gameLoop(time: number) {
     // 1. CORE UPDATE (Model)
     game.update(deltaTime);
 
-    // 2. VIEW PROCESS EVENTS
-    eventsProcessor.processQueue();
-
-    // 3. RENDER (View)
+    // 2. RENDER (View)
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.save();
     
@@ -52,8 +47,7 @@ function gameLoop(time: number) {
     const camY = -game.player.pos.y + canvas.height / 2;
     ctx.translate(camX, camY);
 
-    backgroundRenderer.draw(ctx, game.player.pos, canvas.width, canvas.height);
-    eventsProcessor.drawAll(ctx);
+    backgroundRenderer.draw(ctx, game.player.pos, canvas.width, canvas.height); 
     
     ctx.restore();
 

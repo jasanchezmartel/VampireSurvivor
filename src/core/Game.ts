@@ -1,4 +1,4 @@
-import { Player, type InputState } from './entities/Player';
+import { Player } from './entities/Player';
 import { Enemy } from './entities/Enemy';
 
 export class Game {
@@ -24,7 +24,7 @@ export class Game {
             this.spawnTimer = 0;
             const spawnX = this.player.pos.x + (Math.random() > 0.5 ? 500 : -500);
             const spawnY = this.player.pos.y + (Math.random() > 0.5 ? 500 : -500);
-            this.enemies.push(new Enemy(spawnX, spawnY, 1.2));
+            this.enemies.push(new Enemy(spawnX, spawnY, 1));
         }
 
         // Update enemies

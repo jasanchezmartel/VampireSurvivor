@@ -1,17 +1,17 @@
 // @vitest-environment jsdom
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { Background } from '../../src/entities/Background';
+import { BackgroundRenderer } from '../../src/view/renderers/BackgroundRenderer';
 
 describe('Background', () => {
-    let bg: Background;
+    let bg: BackgroundRenderer;
 
     beforeEach(() => {
         // Inicializamos el fondo
-        bg = new Background('/background/Grass Pack Spritesheet.png');
+        bg = new BackgroundRenderer('/background/Grass Pack Spritesheet.png');
     });
 
     it('debería inicializarse correctamente', () => {
-        expect(bg).toBeInstanceOf(Background);
+        expect(bg).toBeInstanceOf(BackgroundRenderer);
     });
 
     it('debería utilizar todas las variedades de baldosas del spritesheet (biomas)', () => {

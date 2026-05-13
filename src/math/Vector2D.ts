@@ -19,12 +19,6 @@ export class Vector2D {
         return this;
     }
 
-    public multiply(s: number): Vector2D {
-        this.x *= s;
-        this.y *= s;
-        return this;
-    }
-
     public normalize(): Vector2D {
         const len = this.length();
         if (len > 0) {
