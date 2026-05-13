@@ -1,5 +1,5 @@
 import { Game } from './core/Game';
-import { BackgroundRenderer } from './view/renderers/BackgroundRenderer';
+import { GameRenderer } from './view/GameRenderer.ts';
 
 const canvas = document.getElementById('game-canvas') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d')!;
@@ -13,7 +13,7 @@ window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
 const game = new Game();
-const backgroundRenderer = new BackgroundRenderer('/background/background.png');
+const gameRenderer = new GameRenderer(game);
 
 window.addEventListener('keydown', (e) => {
     if (e.key === 'w' || e.key === 'ArrowUp') game.inputs.up = true;
@@ -35,21 +35,9 @@ function gameLoop(time: number) {
     const deltaTime = (time - lastTime) / 1000;
     lastTime = time;
 
-    // 1. CORE UPDATE (Model)
     game.update(deltaTime);
 
-    // 2. RENDER (View)
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.save();
-    
-    // Camera logic follows the player position
-    const camX = -game.player.pos.x + canvas.width / 2;
-    const camY = -game.player.pos.y + canvas.height / 2;
-    ctx.translate(camX, camY);
-
-    backgroundRenderer.draw(ctx, game.player.pos, canvas.width, canvas.height); 
-    
-    ctx.restore();
+    gameRenderer.render(ctx, game, canvas.width, canvas.height);
 
     requestAnimationFrame(gameLoop);
 }

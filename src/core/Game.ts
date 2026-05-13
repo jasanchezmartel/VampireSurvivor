@@ -4,7 +4,7 @@ import { Enemy } from './entities/Enemy';
 export class Game {
     public player: Player;
     public enemies: Enemy[] = [];
-    
+
     // Inputs are driven externally (from window listeners in main.ts)
     public inputs: InputState = { up: false, down: false, left: false, right: false };
 
