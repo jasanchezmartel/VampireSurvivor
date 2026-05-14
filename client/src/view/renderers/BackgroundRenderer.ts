@@ -1,4 +1,4 @@
-import { Vector2D } from '../../math/Vector2D';
+import { Vector2D } from '../../../../server/math/Vector2D';
 
 export class BackgroundRenderer {
     private image: HTMLImageElement;

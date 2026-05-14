@@ -1,4 +1,4 @@
-import { Enemy } from "../../core/entities/Enemy";
+import { Enemy } from "../../../../server/core/entities/Enemy";
 
 export class EnemyRenderer {
     private enemy: Enemy;

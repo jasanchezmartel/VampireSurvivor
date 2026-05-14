@@ -1,4 +1,4 @@
-import { Projectile } from "../../core/entities/Projectile";
+import { Projectile } from "../../../../server/core/entities/Projectile";
 
 export class ProjectileRenderer {
     public static draw(ctx: CanvasRenderingContext2D, projectile: Projectile) {

@@ -1,4 +1,4 @@
-import { Player } from '../../core/entities/Player';
+import { Player } from '../../../../server/core/entities/Player';
 
 export class PlayerRenderer {
     private player: Player;

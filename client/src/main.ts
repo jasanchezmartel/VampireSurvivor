@@ -1,6 +1,6 @@
-import { Game } from './core/Game';
+import { Game } from '../../server/core/Game';
 import { GameRenderer } from './view/GameRenderer.ts';
-import { InputHandler } from './core/inputs/InputHandler';
+import { InputHandler } from '../../server/core/inputs/InputHandler';
 
 const canvas = document.getElementById('game-canvas') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d')!;

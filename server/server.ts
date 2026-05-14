@@ -3,7 +3,7 @@ import path from 'path';
 
 const app = express();
 const PORT = 3000;
-const distDir = path.resolve('dist');
+const distDir = path.resolve('../client/dist');
 
 app.use(express.static(distDir));
 

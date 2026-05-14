@@ -1,4 +1,4 @@
-import { Game } from '../core/Game';
+import { Game } from '../../../server/core/Game';
 import { BackgroundRenderer } from './renderers/BackgroundRenderer';
 import { PlayerRenderer } from './renderers/PlayerRenderer';
 import { EnemyRenderer } from './renderers/EnemyRenderer';
