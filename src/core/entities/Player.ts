@@ -1,23 +1,12 @@
 import { Vector2D } from '../../math/Vector2D';
-import { eventBus } from '../events';
+import { BaseEntity } from './BaseEntity';
 
-export class Player {
-    public pos: Vector2D;
-    public speed: number;
-    public direction: Vector2D = new Vector2D(1, 0);
-    public name: string = 'Player';
+export class Player extends BaseEntity {
+    public name: string;
 
-    public readonly type = 'player';
-    public readonly id: string;
-
-    constructor(x: number, y: number, speed: number = 3, name: string = this.name) {
-        this.id = 'player_' + Math.random().toString(36);
-        this.pos = new Vector2D(x, y);
-        this.speed = speed;
+    constructor(x: number, y: number, speed: number = 3, name: string = 'Player') {
+        super('player', x, y, speed, new Vector2D(1, 0));
         this.name = name;
-
-        // Broadcast spawn event
-        eventBus.emit('spawn', { entity: this });
     }
 
     update(inputs: { up: boolean; down: boolean; left: boolean; right: boolean }) {

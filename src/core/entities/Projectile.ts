@@ -1,23 +1,13 @@
 import { Vector2D } from '../../math/Vector2D';
-import { eventBus } from '../events';
+import { BaseEntity } from './BaseEntity';
 
-export class Projectile {
-    public pos: Vector2D;
-    public direction: Vector2D;
-    public speed: number;
+export class Projectile extends BaseEntity {
     public damage: number;
     public lifeTime: number = 0;
-    public readonly id: string;
-    public readonly type = 'projectile';
 
     constructor(x: number, y: number, direction: Vector2D, speed: number = 5, damage: number = 1) {
-        this.id = 'proj_' + Math.random().toString(36);
-        this.pos = new Vector2D(x, y);
-        this.direction = new Vector2D(direction.x, direction.y).normalize();
-        this.speed = speed;
+        super('projectile', x, y, speed, direction);
         this.damage = damage;
-        
-        eventBus.emit('spawn', { entity: this });
     }
 
     public update(deltaTime: number) {

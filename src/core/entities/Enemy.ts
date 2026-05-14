@@ -1,23 +1,12 @@
 import { Vector2D } from '../../math/Vector2D';
-import { eventBus } from '../events';
+import { BaseEntity } from './BaseEntity';
 
-export class Enemy {
-    public readonly id: string;
-    public readonly type = 'enemy';
-    public pos: Vector2D;
-    public speed: number;
-    public direction: Vector2D; // Direction the enemy is facing
-
+export class Enemy extends BaseEntity {
     public hp: number;
 
     constructor(x: number, y: number, speed: number = 1, hp: number = 3) {
-        this.id = 'enemy_' + Math.random().toString(36);
-        this.pos = new Vector2D(x, y);
-        this.speed = speed;
+        super('enemy', x, y, speed, new Vector2D(1, 0));
         this.hp = hp;
-        this.direction = new Vector2D(1, 0); // Default facing right
-        
-        eventBus.emit('spawn', { entity: this });
     }
 
     public takeDamage(amount: number) {
