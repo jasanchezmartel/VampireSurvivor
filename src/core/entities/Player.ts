@@ -1,5 +1,6 @@
 import { Vector2D } from '../../math/Vector2D';
 import { BaseEntity } from './BaseEntity';
+import type { InputState } from '../inputs/InputHandler';
 
 export class Player extends BaseEntity {
     public name: string;
@@ -9,7 +10,7 @@ export class Player extends BaseEntity {
         this.name = name;
     }
 
-    update(inputs: { up: boolean; down: boolean; left: boolean; right: boolean }) {
+    update(inputs: InputState) {
         const direction = new Vector2D(0, 0);
         if (inputs.up) direction.y -= 1;
         if (inputs.down) direction.y += 1;

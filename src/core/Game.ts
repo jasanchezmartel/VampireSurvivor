@@ -2,15 +2,7 @@ import { Player } from './entities/Player';
 import { Enemy } from './entities/Enemy';
 import { Projectile } from './entities/Projectile';
 import { Vector2D } from '../math/Vector2D';
-
-export interface InputState {
-    up: boolean;
-    down: boolean;
-    left: boolean;
-    right: boolean;
-    targetX?: number;
-    targetY?: number;
-}
+import type { InputState } from './inputs/InputHandler';
 
 export class Game {
     public player: Player;
@@ -20,13 +12,23 @@ export class Game {
     // Inputs are driven externally (from window listeners in main.ts)
     public inputs: InputState = { up: false, down: false, left: false, right: false };
 
-    private spawnTimer = 0;
     private shootTimer = 0;
     public wave = 1;
     private waveTimer = 0;
+    private lastSpawnedWave = 0;
 
     constructor(playerName: string = 'Player') {
         this.player = new Player(0, 0, 1.8, playerName);
+    }
+
+    private spawnEnemies(count: number) {
+        for (let i = 0; i < count; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 500 + Math.random() * 200;
+            const spawnX = this.player.pos.x + Math.cos(angle) * distance;
+            const spawnY = this.player.pos.y + Math.sin(angle) * distance;
+            this.enemies.push(new Enemy(spawnX, spawnY, 1 + this.wave * 0.1, 2));
+        }
     }
 
     public update(deltaTime: number) {
@@ -76,24 +78,16 @@ export class Game {
 
         // Wave logic
         this.waveTimer += deltaTime;
-        if (this.waveTimer > 15) { // New wave every 15 seconds
+        if (this.waveTimer > 20) { // New wave every 20 seconds
             this.waveTimer = 0;
             this.wave++;
         }
 
-        // Spawn enemies occasionally in waves
-        this.spawnTimer += deltaTime;
-        const spawnInterval = Math.max(0.5, 2 - this.wave * 0.1);
-        if (this.spawnTimer > spawnInterval) {
-            this.spawnTimer = 0;
-            const enemiesToSpawn = Math.min(10, Math.ceil(this.wave / 2));
-            for (let i = 0; i < enemiesToSpawn; i++) {
-                const angle = Math.random() * Math.PI * 2;
-                const distance = 500 + Math.random() * 200;
-                const spawnX = this.player.pos.x + Math.cos(angle) * distance;
-                const spawnY = this.player.pos.y + Math.sin(angle) * distance;
-                this.enemies.push(new Enemy(spawnX, spawnY, 1 + this.wave * 0.1, 2));
-            }
+        // Burst spawn at start of each wave
+        if (this.wave > this.lastSpawnedWave) {
+            const enemiesToSpawn = 10 + (this.wave - 1) * 5;
+            this.spawnEnemies(enemiesToSpawn);
+            this.lastSpawnedWave = this.wave;
         }
 
         // Update enemies
