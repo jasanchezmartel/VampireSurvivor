@@ -9,9 +9,7 @@ export class Game {
     public enemies: Enemy[] = [];
     public projectiles: Projectile[] = [];
 
-    // Inputs are driven externally (from window listeners in main.ts)
-    public inputs: InputState = { up: false, down: false, left: false, right: false };
-
+    // State
     private shootTimer = 0;
     public wave = 1;
     private waveTimer = 0;
@@ -31,18 +29,18 @@ export class Game {
         }
     }
 
-    public update(deltaTime: number) {
+    public update(deltaTime: number, inputs: InputState) {
         // Update player
-        this.player.update(this.inputs);
+        this.player.update(inputs);
 
         // Shooting logic
         this.shootTimer += deltaTime;
         if (this.shootTimer > 0.5) { // Shoot every 0.5 seconds
             this.shootTimer = 0;
             let projDir = this.player.direction;
-            if (this.inputs.targetX !== undefined && this.inputs.targetY !== undefined) {
-                const dirX = this.inputs.targetX - this.player.pos.x;
-                const dirY = this.inputs.targetY - this.player.pos.y;
+            if (inputs.targetX !== undefined && inputs.targetY !== undefined) {
+                const dirX = inputs.targetX - this.player.pos.x;
+                const dirY = inputs.targetY - this.player.pos.y;
                 if (dirX !== 0 || dirY !== 0) {
                     projDir = new Vector2D(dirX, dirY).normalize();
                 }

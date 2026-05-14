@@ -21,7 +21,6 @@ function resizeCanvas() {
 startBtn.addEventListener('click', () => {
     const playerName = playerNameInput.value || 'Player';
     game = new Game(playerName);
-    game.inputs = inputHandler.state;
     gameRenderer = new GameRenderer(game);
     
     menu.style.display = 'none';
@@ -42,7 +41,7 @@ function gameLoop(time: number) {
 
     inputHandler.update(game.player.pos, canvas);
 
-    game.update(deltaTime);
+    game.update(deltaTime, inputHandler.state);
     gameRenderer.render(ctx, game, canvas.width, canvas.height);
 
     requestAnimationFrame(gameLoop);
