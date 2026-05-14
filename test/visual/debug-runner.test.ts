@@ -33,8 +33,12 @@ canvas.addEventListener('mousedown', (e) => {
 });
 
 // --- 3. FUNCIONES GLOBALES (PARA BOTONES HTML) ---
-(window as any).triggerAction = (action: 'attack' | 'hit' | 'death') => player.playAction(action);
-(window as any).resetPlayer = () => location.reload();
+interface DebugWindow extends Window {
+    triggerAction?: (action: 'attack' | 'hit' | 'death') => void;
+    resetPlayer?: () => void;
+}
+(window as DebugWindow).triggerAction = (action: 'attack' | 'hit' | 'death') => player.playAction(action);
+(window as DebugWindow).resetPlayer = () => location.reload();
 
 // --- 4. RENDERIZADO MINIMALISTA ---
 function drawCaveBackground(ctx: CanvasRenderingContext2D) {

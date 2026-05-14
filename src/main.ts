@@ -15,6 +15,14 @@ resizeCanvas();
 const game = new Game();
 const gameRenderer = new GameRenderer(game);
 
+let mouseScreenX = window.innerWidth / 2;
+let mouseScreenY = window.innerHeight / 2;
+
+window.addEventListener('mousemove', (e) => {
+    mouseScreenX = e.clientX;
+    mouseScreenY = e.clientY;
+});
+
 window.addEventListener('keydown', (e) => {
     if (e.key === 'w' || e.key === 'ArrowUp') game.inputs.up = true;
     if (e.key === 's' || e.key === 'ArrowDown') game.inputs.down = true;
@@ -34,6 +42,10 @@ let lastTime = performance.now();
 function gameLoop(time: number) {
     const deltaTime = (time - lastTime) / 1000;
     lastTime = time;
+
+    // Convert screen coordinates to world coordinates for targeting
+    game.inputs.targetX = mouseScreenX + game.player.pos.x - canvas.width / 2;
+    game.inputs.targetY = mouseScreenY + game.player.pos.y - canvas.height / 2;
 
     game.update(deltaTime);
 

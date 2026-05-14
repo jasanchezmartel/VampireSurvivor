@@ -2,6 +2,7 @@ import { Game } from '../core/Game';
 import { BackgroundRenderer } from './renderers/BackgroundRenderer';
 import { PlayerRenderer } from './renderers/PlayerRenderer';
 import { EnemyRenderer } from './renderers/EnemyRenderer';
+import { ProjectileRenderer } from './renderers/ProjectileRenderer';
 
 export class GameRenderer {
     private readonly backgroundRenderer: BackgroundRenderer;
@@ -22,6 +23,11 @@ export class GameRenderer {
         ctx.translate(camX, camY);
 
         this.backgroundRenderer.draw(ctx, game.player.pos, width, height);
+        
+        for (const proj of game.projectiles) {
+            ProjectileRenderer.draw(ctx, proj);
+        }
+
         this.playerRenderer.draw(ctx);
 
         for (const enemy of game.enemies) {

@@ -10,14 +10,14 @@ describe('Background', () => {
         bg = new BackgroundRenderer('/background/Grass Pack Spritesheet.png');
     });
 
-    it('debería inicializarse correctamente', () => {
+    it('inicializa correctamente', () => {
         expect(bg).toBeInstanceOf(BackgroundRenderer);
     });
 
-    it('debería utilizar todas las variedades de baldosas del spritesheet (biomas)', () => {
+    it('utiliza todas las variedades de baldosas del spritesheet (biomas)', () => {
         // Accedemos al método privado getTileAt para verificar la lógica de ruido
-        // Usamos (bg as any) para saltar la restricción de 'private' en el test
-        const getTile = (bg as any).getTileAt.bind(bg);
+        // Usamos (bg as unknown) para saltar la restricción de 'private' en el test
+        const getTile = (bg as unknown as { getTileAt: (x: number, y: number) => { y: number } }).getTileAt.bind(bg);
 
         const filasEncontradas = new Set<number>();
 
@@ -40,8 +40,8 @@ describe('Background', () => {
         expect(filasEncontradas.has(3)).toBe(true);
     });
 
-    it('debería gestionar correctamente los chunks en memoria', () => {
-        const chunks = (bg as any).chunks;
+    it('gestiona correctamente los chunks en memoria', () => {
+        const chunks = (bg as unknown as { chunks: Map<string, unknown> }).chunks;
         expect(chunks).toBeInstanceOf(Map);
         expect(chunks.size).toBe(0); // Empieza vacío
     });

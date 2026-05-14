@@ -1,8 +1,9 @@
 import mitt from 'mitt';
 import type { Player } from './entities/Player';
 import type { Enemy } from './entities/Enemy';
+import type { Projectile } from './entities/Projectile';
 
-export type CoreEntity = Player | Enemy;
+export type CoreEntity = Player | Enemy | Projectile;
 
 export type GameEvents = {
     spawn: { entity: CoreEntity };

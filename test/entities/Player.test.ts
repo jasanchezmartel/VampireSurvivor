@@ -29,9 +29,9 @@ describe('Player Logic', () => {
     });
 
     // TEST 1: Verificar que se han pedido cargar las imágenes
-    it('debería inicializar los sprites correctamente (Idle y Run)', () => {
+    it('inicializa los sprites correctamente (Idle y Run)', () => {
         // Accedemos a la propiedad privada 'sprites' usando 'any'
-        const p = player as any;
+        const p = player as unknown as { sprites: { idle: { img: { src: string } }, run: { img: { src: string } } } };
 
         // Verificamos que el objeto de sprites existe
         expect(p.sprites).toBeDefined();
@@ -42,7 +42,7 @@ describe('Player Logic', () => {
     });
 
     // TEST 2: Movimiento en todas direcciones
-    it('debería moverse correctamente en todas las direcciones', () => {
+    it('se mueve correctamente en todas las direcciones', () => {
         // DERECHA
         player.update({ up: false, down: false, left: false, right: true });
         expect(player.pos.x).toBe(10);

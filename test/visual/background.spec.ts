@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Visualización de Background', () => {
-    test('debería mostrar los diferentes biomas del mapa', async ({ page }) => {
+    test('muestra los diferentes biomas del mapa', async ({ page }) => {
         await page.goto('/');
 
         // Esperamos a que el canvas esté listo
@@ -11,7 +11,7 @@ test.describe('Visualización de Background', () => {
         // Función para mover al jugador a una posición específica y esperar a que el fondo cargue
         const checkPosition = async (x: number, y: number, name: string) => {
             await page.evaluate(({ x, y }) => {
-                const p = (window as any).player;
+                const p = (window as unknown as { player?: { pos: { x: number, y: number } } }).player;
                 if (p) {
                     p.pos.x = x;
                     p.pos.y = y;

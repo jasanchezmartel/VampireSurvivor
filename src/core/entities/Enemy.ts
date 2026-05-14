@@ -8,13 +8,20 @@ export class Enemy {
     public speed: number;
     public direction: Vector2D; // Direction the enemy is facing
 
-    constructor(x: number, y: number, speed: number = 1) {
+    public hp: number;
+
+    constructor(x: number, y: number, speed: number = 1, hp: number = 3) {
         this.id = 'enemy_' + Math.random().toString(36);
         this.pos = new Vector2D(x, y);
         this.speed = speed;
+        this.hp = hp;
         this.direction = new Vector2D(1, 0); // Default facing right
         
         eventBus.emit('spawn', { entity: this });
+    }
+
+    public takeDamage(amount: number) {
+        this.hp -= amount;
     }
 
     public update(targetPos: Vector2D) {

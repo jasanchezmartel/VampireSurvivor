@@ -21,7 +21,13 @@ interface WorldObject {
 let objects: WorldObject[] = [];
 let currentBiome = 'cave';
 
-const BIOMES: Record<string, any> = {
+interface BiomeConfig {
+    bg: string;
+    count: number;
+    shadow: string;
+}
+
+const BIOMES: Record<string, BiomeConfig> = {
     cave:  { bg: '#0a0812', count: 50, shadow: 'rgba(10, 5, 20, 0.7)' },
     snow:  { bg: '#080d1a', count: 125, shadow: 'rgba(0,0,0,0.3)' },
     grass: { bg: '#659a65', count: 120, shadow: 'rgba(20,40,20,0.3)' }, // Verde suave césped
@@ -132,5 +138,8 @@ function loop() {
 }
 
 // Iniciar con Cueva
-(window as any).setBiome('cave');
+interface BiomeWindow extends Window {
+    setBiome?: (biome: string) => void;
+}
+(window as BiomeWindow).setBiome?.('cave');
 loop();
