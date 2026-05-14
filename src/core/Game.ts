@@ -25,8 +25,8 @@ export class Game {
     public wave = 1;
     private waveTimer = 0;
 
-    constructor() {
-        this.player = new Player(0, 0, 1.8);
+    constructor(playerName: string = 'Player') {
+        this.player = new Player(0, 0, 1.8, playerName);
     }
 
     public update(deltaTime: number) {

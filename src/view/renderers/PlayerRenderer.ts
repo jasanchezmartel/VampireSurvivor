@@ -12,16 +12,20 @@ export class PlayerRenderer {
         context.translate(Math.floor(this.player.pos.x), Math.floor(this.player.pos.y));
 
         context.fillStyle = 'blue';
-        // Draw a simple square of 32x32 centered
         context.fillRect(-16, -16, 32, 32);
         
-        // Draw direction indicator (line pointing in the direction the player is facing)
         context.strokeStyle = 'white';
         context.lineWidth = 2;
         context.beginPath();
         context.moveTo(0, 0);
         context.lineTo(this.player.direction.x * 16, this.player.direction.y * 16);
         context.stroke();
+
+        // Draw player name above
+        context.fillStyle = '#ff0707';
+        context.font = 'bold 12px Arial';
+        context.textAlign = 'center';
+        context.fillText(this.player.name, 0, -25);
         
         context.restore();
     }

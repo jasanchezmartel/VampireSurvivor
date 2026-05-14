@@ -4,19 +4,17 @@ import { eventBus } from '../events';
 export class Player {
     public pos: Vector2D;
     public speed: number;
-    public direction: Vector2D = new Vector2D(1, 0); // Default facing rightsdasdas
-
+    public direction: Vector2D = new Vector2D(1, 0);
+    public name: string = 'Player';
 
     public readonly type = 'player';
-
-    // A simple unique ID for tracking entities in the renderer
     public readonly id: string;
 
-    constructor(x: number, y: number, speed: number = 3) {
+    constructor(x: number, y: number, speed: number = 3, name: string = this.name) {
         this.id = 'player_' + Math.random().toString(36);
         this.pos = new Vector2D(x, y);
         this.speed = speed;
-
+        this.name = name;
 
         // Broadcast spawn event
         eventBus.emit('spawn', { entity: this });

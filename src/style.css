@@ -27,3 +27,56 @@ body {
     image-rendering: pixelated;
     border: 1px solid #333;
 }
+
+.menu-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 40px;
+    border-radius: 10px;
+    z-index: 1000;
+    border: 2px solid var(--accent-color);
+}
+
+.menu-container h1 {
+    color: var(--accent-color);
+    margin-bottom: 30px;
+}
+
+.menu-container input {
+    display: block;
+    margin: 15px auto;
+    padding: 10px;
+    font-size: 16px;
+    width: 200px;
+    border: none;
+    border-radius: 5px;
+}
+
+.menu-container button {
+    padding: 10px 30px;
+    font-size: 16px;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.menu-container button:hover {
+    background: #ff3333;
+}
+
+#player-name-display {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    color: var(--accent-color);
+    font-size: 18px;
+    font-weight: bold;
+    z-index: 100;
+    display: none;
+}
