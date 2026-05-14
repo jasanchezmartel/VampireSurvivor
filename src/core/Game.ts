@@ -14,6 +14,8 @@ export class Game {
     public wave = 1;
     private waveTimer = 0;
     private lastSpawnedWave = 0;
+    private pendingEnemies = 0;
+    private spawnTimer = 0;
 
     constructor(playerName: string = 'Player') {
         this.player = new Player(0, 0, 1.8, playerName);
@@ -76,16 +78,27 @@ export class Game {
 
         // Wave logic
         this.waveTimer += deltaTime;
-        if (this.waveTimer > 20) { // New wave every 20 seconds
+        if (this.waveTimer > 30) { // New wave every 20 seconds
             this.waveTimer = 0;
             this.wave++;
         }
 
-        // Burst spawn at start of each wave
+        // Initialize wave pending enemies
         if (this.wave > this.lastSpawnedWave) {
-            const enemiesToSpawn = 10 + (this.wave - 1) * 5;
-            this.spawnEnemies(enemiesToSpawn);
+            this.pendingEnemies = 10 + (this.wave - 1) * 5;
             this.lastSpawnedWave = this.wave;
+            this.spawnTimer = 0; // Reset spawn timer for the new wave
+        }
+
+        // Trickle spawn enemies during the wave
+        if (this.pendingEnemies > 0) {
+            this.spawnTimer += deltaTime;
+            if (this.spawnTimer > 1.0) { // Spawn every 1 second
+                const amount = Math.min(2, this.pendingEnemies);
+                this.spawnEnemies(amount);
+                this.pendingEnemies -= amount;
+                this.spawnTimer = 0;
+            }
         }
 
         // Update enemies
