@@ -3,11 +3,15 @@ import { Enemy } from './entities/Enemy';
 import { Projectile } from './entities/Projectile';
 import { Vector2D } from '../math/Vector2D';
 import type { InputState } from './inputs/InputHandler';
+import { Pool } from './utils/Pool';
 
 export class Game {
     public player: Player;
     public enemies: Enemy[] = [];
     public projectiles: Projectile[] = [];
+
+    private enemyPool: Pool<Enemy>;
+    private projectilePool: Pool<Projectile>;
 
     // State
     private shootTimer = 0;
@@ -19,6 +23,8 @@ export class Game {
 
     constructor(playerName: string = 'Player') {
         this.player = new Player(0, 0, 1.8, playerName);
+        this.enemyPool = new Pool(() => new Enemy());
+        this.projectilePool = new Pool(() => new Projectile());
     }
 
     private spawnEnemies(count: number) {
@@ -27,7 +33,7 @@ export class Game {
             const distance = 500 + Math.random() * 200;
             const spawnX = this.player.pos.x + Math.cos(angle) * distance;
             const spawnY = this.player.pos.y + Math.sin(angle) * distance;
-            this.enemies.push(new Enemy(spawnX, spawnY, 1 + this.wave * 0.1, 2));
+            this.enemies.push(this.enemyPool.acquire().init(spawnX, spawnY, 1 + this.wave * 0.1, 2));
         }
     }
 
@@ -47,7 +53,7 @@ export class Game {
                     projDir = new Vector2D(dirX, dirY).normalize();
                 }
             }
-            this.projectiles.push(new Projectile(this.player.pos.x, this.player.pos.y, projDir, 7, 1));
+            this.projectiles.push(this.projectilePool.acquire().init(this.player.pos.x, this.player.pos.y, projDir, 7, 1));
         }
 
         // Update projectiles and check collisions
@@ -55,7 +61,7 @@ export class Game {
             const proj = this.projectiles[i];
             proj.update(deltaTime);
             if (proj.lifeTime > 2) { // Remove after 2 seconds
-                this.projectiles.splice(i, 1);
+                this.projectilePool.release(this.projectiles.splice(i, 1)[0]);
                 continue;
             }
 
@@ -67,9 +73,9 @@ export class Game {
                 const distSq = dx * dx + dy * dy;
                 if (distSq < 400) { // Assuming radius of ~20 -> 20^2 = 400
                     enemy.takeDamage(proj.damage);
-                    this.projectiles.splice(i, 1);
+                    this.projectilePool.release(this.projectiles.splice(i, 1)[0]);
                     if (enemy.hp <= 0) {
-                        this.enemies.splice(j, 1);
+                        this.enemyPool.release(this.enemies.splice(j, 1)[0]);
                     }
                     break;
                 }

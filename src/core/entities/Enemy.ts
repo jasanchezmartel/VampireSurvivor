@@ -2,11 +2,20 @@ import { Vector2D } from '../../math/Vector2D';
 import { BaseEntity } from './BaseEntity';
 
 export class Enemy extends BaseEntity {
-    public hp: number;
+    public hp: number = 0;
 
-    constructor(x: number, y: number, speed: number = 1, hp: number = 3) {
-        super('enemy', x, y, speed, new Vector2D(1, 0));
+    constructor() {
+        super('enemy', 0, 0, 1, new Vector2D(1, 0));
+    }
+
+    public init(x: number, y: number, speed: number, hp: number) {
+        this.pos.x = x;
+        this.pos.y = y;
+        this.speed = speed;
         this.hp = hp;
+        this.direction.x = 1;
+        this.direction.y = 0;
+        return this;
     }
 
     public takeDamage(amount: number) {
